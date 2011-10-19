@@ -3,7 +3,7 @@
 # during compilation, packaging, distribution, etc.
 #
 version: 0.2
-description: My module
+description: Provides access to Quick Look functionality in iOS
 author: Clearly Innovative Inc
 license: Specify your license
 copyright: Copyright (c) 2011 by Clearly Innovative Inc
