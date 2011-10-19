@@ -94,52 +94,109 @@
 	ENSURE_UI_THREAD_1_ARG(args);
 	ENSURE_SINGLE_ARG_OR_NIL(args,NSDictionary);
 	NSString *filePath = [TiUtils stringValue:@"path" properties:args ];
+    BOOL isValid = NO;
 	
 	TiViewProxy* view_proxy_view = [args objectForKey:@"view"];
 	TiViewProxy* view_proxy_btn = [args objectForKey:@"button"];
 	NSLog(@"filePath %@", filePath);
 	NSLog(@"view_proxy_view %@", view_proxy_view);
 	NSLog(@"view_proxy_btn %@", view_proxy_btn);
-	
-
-	NSString * docDirectory = 
-	[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, 
-										 NSUserDomainMask, 
-										 YES)     lastObject];
-	NSString *fileLocation = [docDirectory stringByAppendingPathComponent:filePath];
-	NSLog(@"fileLocation %@", fileLocation);	
-
-	
-	NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-	NSLog(@"fileURL %@", fileURL);	
-	
-	if (self.controller == NULL) {
-		self.controller =  [UIDocumentInteractionController interactionControllerWithURL:fileURL];
+    
+    filePath = [[NSBundle mainBundle] pathForResource:@"dcps012" ofType:@"pdf"];
+		
+	if (controller == nil) {
+		controller =  [[UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:filePath]] retain];
+        controller.delegate = self;
 	}
-
-
-	if (view_proxy_btn)
+    
+    
+    [controller presentPreviewAnimated:YES];
+    return;
+    
+	if (NULL_IF_NIL(view_proxy_view) == NULL)
 	{
 		NSLog(@"I have a button", nil);
 		UIBarButtonItem *item = [view_proxy_btn barButtonItem];
-		[[self controller] presentOptionsMenuFromBarButtonItem:item animated:YES];
+		isValid = [controller presentOptionsMenuFromBarButtonItem:item animated:YES];
 	} else {
 		NSLog(@"I have a window", nil);
 		CGRect rect = [TiUtils rectValue:args];
-		//NSLog(@"rect %@", rect);	
-	    [[self controller] presentOpenInMenuFromRect:CGRectMake(200, 200, 200, 200) inView: [view_proxy_view view]
+		//NSLog(@"rect %@", [rect describe]);	
+        isValid = [controller presentOpenInMenuFromRect:CGRectMake(200.0f, 200.0f, 200.0f, 200.0f) inView:[[[TiApp app] controller] view]
 									   animated:YES];
 	}
-	return [self controller];
+    NSLog(@"Is valid %d", isValid);
+    return;
 }
 
 #pragma mark Delegates
 
+//===================================================================
 - (UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller
 {
-	UIViewController *ac = [[TiApp app] controller];
-	return ac;
+	return [[TiApp app] controller];
 }
+
+- (UIView *)documentInteractionControllerViewForPreview:(UIDocumentInteractionController *)controller
+{
+	return [[TiApp app] controller].view;
+}
+
+- (CGRect)documentInteractionControllerRectForPreview:(UIDocumentInteractionController *)controller
+{
+	return [[TiApp app] controller].view.frame;
+}
+
+
+/*
+ - (UIView *)documentInteractionControllerViewForPreview:(UIDocumentInteractionController *)controller
+ {
+     UIViewController *ac = [[TiApp app] controller];
+     return ac.view;
+ }
+
+- (void)documentInteractionControllerWillBeginPreview:(UIDocumentInteractionController *)controller
+{
+	if ([self _hasListeners:@"load"])
+	{
+		[self fireEvent:@"load" withObject:nil];
+	}
+}
+
+- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
+{
+	if ([self _hasListeners:@"unload"])
+	{
+		[self fireEvent:@"unload" withObject:nil];
+	}
+}
+
+
+- (void)documentInteractionControllerWillPresentOpenInMenu:(UIDocumentInteractionController *)controller
+{
+	if ([self _hasListeners:@"menu"])
+	{
+		NSDictionary *event = [NSDictionary dictionaryWithObject:@"open" forKey:@"type"];
+		[self fireEvent:@"menu" withObject:event];
+	}
+}
+
+- (void)documentInteractionControllerWillPresentOptionsMenu:(UIDocumentInteractionController *)controller
+{
+	if ([self _hasListeners:@"menu"])
+	{
+		NSDictionary *event = [NSDictionary dictionaryWithObject:@"options" forKey:@"type"];
+		[self fireEvent:@"menu" withObject:event];
+	}
+}
+*/
+- (BOOL)documentInteractionController:(UIDocumentInteractionController *)controller canPerformAction:(SEL)action {
+    return YES;
+}
+- (BOOL)documentInteractionController:(UIDocumentInteractionController *)controller performAction:(SEL)action {
+    return YES;
+}
+
 
 
 @end

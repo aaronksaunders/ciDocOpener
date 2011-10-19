@@ -18,6 +18,12 @@ Ti.API.info("module is => " + ciDocOpener);
 
 Ti.API.info(Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory + "/dcps012.pdf").nativePath);
 
+var f = Titanium.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, 'dcps012.pdf');
+var tempFile = Titanium.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'dcps012.pdf');
+tempFile.write(f.read());
+
+Ti.API.info("temp file "+tempFile.nativePath);
+
 button = Ti.UI.createButton({
     top: 10,
     left: 10,
@@ -35,6 +41,6 @@ function(e) {
         y:10,
         width:200,
         height: 300,
-        path: "dcps012.pdf"
+        path: tempFile.nativePath
     });
 });

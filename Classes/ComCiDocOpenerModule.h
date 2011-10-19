@@ -6,7 +6,8 @@
  */
 #import "TiModule.h"
 
-@interface ComCiDocOpenerModule : TiModule 
+
+@interface ComCiDocOpenerModule : TiModule <UIDocumentInteractionControllerDelegate>
 {
 }
 @property (nonatomic, retain) UIDocumentInteractionController *controller;
