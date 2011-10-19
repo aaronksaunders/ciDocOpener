@@ -36,11 +36,6 @@ window.add(button);
 button.addEventListener('click',
 function(e) {
     ciDocOpener.useDocumentOpener({
-        button: button,
-        x:10,
-        y:10,
-        width:200,
-        height: 300,
         path: tempFile.nativePath
     });
 });
