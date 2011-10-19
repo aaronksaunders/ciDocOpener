@@ -19,7 +19,7 @@ Ti.API.info("module is => " + ciDocOpener);
 Ti.API.info(Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory + "/dcps012.pdf").nativePath);
 
 var f = Titanium.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, 'dcps012.pdf');
-var tempFile = Titanium.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'dcps012.pdf');
+var tempFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'dcps012.pdf');
 tempFile.write(f.read());
 
 Ti.API.info("temp file "+tempFile.nativePath);
