@@ -99,7 +99,10 @@
 	if (controller == nil) {
 		controller =  [[UIDocumentInteractionController interactionControllerWithURL:[NSURL URLWithString:fileName]] retain];
         controller.delegate = self;
-	}
+	} else {
+        controller.URL = [NSURL URLWithString:fileName];
+        controller.delegate = self;
+    }
     
     
     [controller presentPreviewAnimated:YES];
