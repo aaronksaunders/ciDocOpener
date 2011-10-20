@@ -128,11 +128,19 @@
 	return [[TiApp app] controller].view.frame;
 }
 
-- (BOOL)documentInteractionController:(UIDocumentInteractionController *)controller canPerformAction:(SEL)action {
-    return YES;
+- (BOOL)documentInteractionController:(UIDocumentInteractionController *)uicontroller canPerformAction:(SEL)action {
+    if (action == @selector(print:)) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 - (BOOL)documentInteractionController:(UIDocumentInteractionController *)controller performAction:(SEL)action {
-    return YES;
+    if (action == @selector(print:)) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 
