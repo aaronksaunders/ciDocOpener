@@ -14,25 +14,24 @@ The cidocopener variable is a reference to the Module object.
 
 ## Reference
 
-TODO: If your module has an API, you should document
-the reference here.
 
-### ___PROJECTNAMEASIDENTIFIER__.function
-
-TODO: This is an example of a module function.
-
-### ___PROJECTNAMEASIDENTIFIER__.property
-
-TODO: This is an example of a module property.
 
 ## Usage
-
-TODO: Enter your usage example here
+<pre>
+	var ciDocOpener = require("com.ci.docOpener");
+	Ti.API.info("module is => " + ciDocOpener);
+	
+	// provide a path and the module will open quickLook
+	ciDocOpener.useDocumentOpener({
+    	path : tempFile.nativePath
+	});
+</pre>
 
 ## Author
 
-TODO: Enter your author name, email and other contact
-details you want to share here. 
+Clearly Innovative, Inc.
+http://www.clearlyinnovative.com
+app.support@clearlyinnovative.com 
 
 ## License
 
